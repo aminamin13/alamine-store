@@ -24,10 +24,9 @@ A modern, responsive online store built with **PHP** as the backend — designed
 
 ## 📷 Preview
 
-
-[![Watch the video](https://img.youtube.com/vi/9FHFY8jAbfQ/0.jpg)](https://www.youtube.com/watch?v=9FHFY8jAbfQ)
-
-
+<a href="https://www.youtube.com/watch?v=9FHFY8jAbfQ" target="_blank">
+  <img src="https://img.youtube.com/vi/9FHFY8jAbfQ/0.jpg" width="300"/>
+</a>
 ---
 
 ## 📦 Getting Started
