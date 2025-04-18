@@ -24,7 +24,9 @@ A modern, responsive online store built with **PHP** as the backend — designed
 
 ## 📷 Preview
 
-[![Watch the video](https://github.com/aminamin13/alamine-store/blob/main/Screen_Recording_20250418_122316.mp4)](https://github.com/aminamin13/alamine-store/blob/main/Screen_Recording_20250418_122316.mp4)
+
+[![Watch the video](https://img.youtube.com/vi/9FHFY8jAbfQ/0.jpg)](https://www.youtube.com/watch?v=9FHFY8jAbfQ)
+
 
 ---
 
