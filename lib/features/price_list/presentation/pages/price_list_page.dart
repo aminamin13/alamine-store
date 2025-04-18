@@ -13,157 +13,164 @@ class PriceListPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    PriceListControllerImpl controller =
-        Get.put(PriceListControllerImpl()); // Ensuring permanent controller
+    PriceListControllerImpl controller = Get.put(
+      PriceListControllerImpl(),
+    ); // Ensuring permanent controller
 
     Future.delayed(Duration.zero, () {
       Get.delete<PriceListControllerImpl>();
     });
     return Scaffold(
-        body: Column(
-      children: [
-        AppPrimaryHeaderContainer(
-          child: Column(children: [
-            AppBar(
-              backgroundColor: Colors.transparent,
-              automaticallyImplyLeading: false,
-              elevation: 0,
-              leading: IconButton(
-                icon: Icon(
-                  Icons.arrow_back_ios_outlined,
-                  color: Colors.black,
+      body: Column(
+        children: [
+          AppPrimaryHeaderContainer(
+            child: Column(
+              children: [
+                AppBar(
+                  backgroundColor: Colors.transparent,
+                  automaticallyImplyLeading: false,
+                  elevation: 0,
+                  leading: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios_outlined,
+                      color: Colors.black,
+                    ),
+                    onPressed: () {
+                      Get.toNamed(AppRoute.homePage);
+                    },
+                  ),
                 ),
-                onPressed: () {
-                  Get.toNamed(AppRoute.homePage);
-                },
-              ),
-            ),
-            Padding(
-                padding: const EdgeInsets.only(
+                Padding(
+                  padding: const EdgeInsets.only(
                     left: AppSizes.defaultSpace,
                     right: AppSizes.defaultSpace,
-                    bottom: AppSizes.defaultSpace),
-                child: GetBuilder<PriceListControllerImpl>(
+                    bottom: AppSizes.defaultSpace,
+                  ),
+                  child: GetBuilder<PriceListControllerImpl>(
+                    builder: (_) {
+                      return Text(
+                        "${"47".tr}: ${controller.allProducts.length}",
+                        style: Theme.of(
+                          context,
+                        ).textTheme.headlineSmall!.copyWith(
+                          fontWeight: FontWeight.w500,
+                          color: AppColors.white,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+                GetBuilder<PriceListControllerImpl>(
                   builder: (_) {
-                    return Text("${"47".tr}: ${controller.allProducts.length}",
-                        style: Theme.of(context)
-                            .textTheme
-                            .headlineSmall!
-                            .copyWith(
-                                fontWeight: FontWeight.w500,
-                                color: AppColors.white));
+                    return AppSearchTextField(
+                      text: "8".tr,
+                      controller: controller.searchController,
+                      onChanged: (query) => controller.search(query),
+                    );
                   },
-                )),
-            GetBuilder<PriceListControllerImpl>(
-              builder: (_) {
-                return AppSearchTextField(
-                  text: "8".tr,
-                  controller: _.searchController,
-                  onChanged: (query) => _.search(query),
-                );
-              },
+                ),
+                const SizedBox(height: AppSizes.spaceBtwSections),
+              ],
             ),
-            SizedBox(
-              height: AppSizes.spaceBtwSections,
-            ),
-          ]),
-        ),
-        GetBuilder<PriceListControllerImpl>(
-          builder: (controller) {
-            if (controller.statusRequest == StatusRequest.loading) {
-              return Center(child: CircularProgressIndicator());
-            } else if (controller.statusRequest == StatusRequest.failure) {
-              return Center(child: Text("27".tr));
-            } else if (controller.allProducts.isEmpty) {
-              return Center(child: Text("42".tr));
-            }
-            return Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                padding: const EdgeInsets.all(8.0),
-                itemCount: controller.filteredProducts.length,
-                itemBuilder: (context, index) {
-                  final product = controller.filteredProducts[index];
-                  //final images = controller.images[index];
+          ),
+          GetBuilder<PriceListControllerImpl>(
+            builder: (controller) {
+              if (controller.statusRequest == StatusRequest.loading) {
+                return const Center(child: CircularProgressIndicator());
+              } else if (controller.statusRequest == StatusRequest.failure) {
+                return Center(child: Text("27".tr));
+              } else if (controller.allProducts.isEmpty) {
+                return Center(child: Text("42".tr));
+              }
+              return Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  padding: const EdgeInsets.all(8.0),
+                  itemCount: controller.filteredProducts.length,
+                  itemBuilder: (context, index) {
+                    final product = controller.filteredProducts[index];
+                    //final images = controller.images[index];
 
-                  print(
-                      "Building item: ${product.name}"); // Debugging each item
-                  return Container(
-                    margin: EdgeInsets.only(bottom: 16.0),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(8.0),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.grey.withOpacity(0.5),
-                          spreadRadius: 2,
-                          blurRadius: 5,
-                          offset: Offset(0, 3),
-                        )
-                      ],
-                    ),
-                    child: GestureDetector(
-                      onTap: () {
-                        controller
-                            .goToProductDetails(controller.allProducts[index]);
-                      },
-                      child: ListTile(
-                        title: Row(
-                          spacing: 15,
-                          children: [
-                            Text(
-                              product.name ?? "Unnamed Product",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            Text(
-                              product.itemCount.toString() ?? "1",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ],
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "${product.carType} ${product.year}" ??
-                                  "Unnamed Product",
-                              maxLines: 2,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                            
-                          ],
-                        ),
-                        trailing: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              "${"45".tr}: ${product.price}\$",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.0,
+                    print(
+                      "Building item: ${product.name}",
+                    ); // Debugging each item
+                    return Container(
+                      margin: const EdgeInsets.only(bottom: 16.0),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(8.0),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.grey.withOpacity(0.5),
+                            spreadRadius: 2,
+                            blurRadius: 5,
+                            offset: const Offset(0, 3),
+                          ),
+                        ],
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          controller.goToProductDetails(
+                            controller.allProducts[index],
+                          );
+                        },
+                        child: ListTile(
+                          title: Row(
+                            children: [
+                              Text(
+                                product.name ?? "Unnamed Product",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                            Text(
-                              "${"46".tr}: ${product.sellPrice}\$",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16.0,
+                              const SizedBox(width: 15),
+                              Text(
+                                product.itemCount.toString() ?? "1",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
                               ),
-                            ),
-                          ],
+                            ],
+                          ),
+                          subtitle: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${product.carType} ${product.year}" ??
+                                    "Unnamed Product",
+                                maxLines: 2,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ],
+                          ),
+                          trailing: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                "${"45".tr}: ${product.price}\$",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                              Text(
+                                "${"46".tr}: ${product.sellPrice}\$",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 16.0,
+                                ),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                  );
-                },
-              ),
-            );
-          },
-        )
-      ],
-    ));
+                    );
+                  },
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }

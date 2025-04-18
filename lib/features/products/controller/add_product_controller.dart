@@ -41,6 +41,7 @@ class AddProductControllerImp extends AddProductController {
   String selectedValue = "بورة شوكين";
   List<XFile> images = [];
   late ImageModel imageModel;
+  
 
   addImages(String id) async {
     statusRequest = StatusRequest.loading;

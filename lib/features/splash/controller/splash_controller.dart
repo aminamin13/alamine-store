@@ -9,7 +9,7 @@ class SplashControllerImpl extends SplashController {
   @override
   void onInit() {
     // TODO: implement onInit
-    Future.delayed(Duration(seconds: 2), () {
+    Future.delayed(const Duration(seconds: 2), () {
       myServices.sharedPreferences.setString("step", "1");
 
       Get.offAndToNamed("/login");

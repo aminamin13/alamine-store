@@ -28,7 +28,7 @@ class SalesPage extends StatelessWidget {
             automaticallyImplyLeading: false,
             elevation: 0,
             leading: IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_back_ios_outlined,
                 color: Colors.black,
               ),
@@ -38,7 +38,7 @@ class SalesPage extends StatelessWidget {
             ),
           ),
           Padding(
-            padding: EdgeInsets.symmetric(
+            padding: const EdgeInsets.symmetric(
                 horizontal: AppSizes.defaultSpace, vertical: 10),
             child: Row(
               children: [
@@ -57,23 +57,23 @@ class SalesPage extends StatelessWidget {
                         ),
                         value: controller.selectedValue,
                         items: [
-                          DropdownMenuItem(
+                          const DropdownMenuItem(
                             value: "all",
                             child: Text("جميع المواقع"),
                           ),
-                          DropdownMenuItem(
+                          const DropdownMenuItem(
                             value: "بورة شوكين",
                             child: Text("بورة شوكين"),
                           ),
-                          DropdownMenuItem(
+                          const DropdownMenuItem(
                             value: "محل دير الزهراني",
                             child: Text("محل دير الزهراني"),
                           ),
-                          DropdownMenuItem(
+                          const DropdownMenuItem(
                             value: "بورة دير الزهراني",
                             child: Text("بورة دير الزهراني"),
                           ),
-                          DropdownMenuItem(
+                          const DropdownMenuItem(
                             value: "محل خلدة",
                             child: Text("محل خلدة"),
                           )
@@ -87,7 +87,7 @@ class SalesPage extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Iconsax.calendar_add,
                     color: AppColors.white,
                     size: 40,
@@ -105,7 +105,7 @@ class SalesPage extends StatelessWidget {
                   },
                 ),
                 IconButton(
-                  icon: Icon(
+                  icon: const Icon(
                     Iconsax.refresh,
                     color: AppColors.white,
                     size: 30,
@@ -117,14 +117,14 @@ class SalesPage extends StatelessWidget {
               ],
             ),
           ),
-          SizedBox(
+          const SizedBox(
             height: AppSizes.spaceBtwSections,
           ),
         ])),
         GetBuilder<SalesControllerImpl>(
           builder: (controller) {
             if (controller.statusRequest == StatusRequest.loading) {
-              return Center(child: CircularProgressIndicator());
+              return const Center(child: CircularProgressIndicator());
             } else if (controller.statusRequest == StatusRequest.failure) {
               return Center(child: Text("37".tr));
             } else if (controller.filteredSales.isEmpty) {
@@ -140,7 +140,7 @@ class SalesPage extends StatelessWidget {
                   final sales = controller.filteredSales[index];
                   // Debugging each item
                   return Container(
-                    margin: EdgeInsets.only(bottom: 16.0),
+                    margin: const EdgeInsets.only(bottom: 16.0),
                     decoration: BoxDecoration(
                       color: Colors.white,
                       borderRadius: BorderRadius.circular(8.0),
@@ -149,7 +149,7 @@ class SalesPage extends StatelessWidget {
                           color: Colors.grey.withOpacity(0.5),
                           spreadRadius: 2,
                           blurRadius: 5,
-                          offset: Offset(0, 3),
+                          offset: const Offset(0, 3),
                         )
                       ],
                     ),
@@ -220,7 +220,7 @@ class SalesPage extends StatelessWidget {
                             children: [
                               Text(
                                 "${"73".tr}  ${sales.salesPrice}\$",
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontSize: 16.0,
                                 ),

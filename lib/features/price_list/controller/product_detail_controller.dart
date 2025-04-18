@@ -25,8 +25,9 @@ class ProductDetailControllerImpl extends ProductDetailController {
   PriceListViewDatasource productData = PriceListViewDatasource(Get.find());
 
   SalesDataSource salesDataSource = SalesDataSource(Get.find());
-  PriceListControllerImpl priceListControllerImpl =
-      Get.put(PriceListControllerImpl());
+  PriceListControllerImpl priceListControllerImpl = Get.put(
+    PriceListControllerImpl(),
+  );
   SalesModel? salesModel;
 
   // Global variable to store matching sale data
@@ -81,8 +82,6 @@ class ProductDetailControllerImpl extends ProductDetailController {
           matchingSaleData = null;
           globalSaleItemsId = null;
           salesModel = null;
-          AppLoaders.errorSnackBar(
-              message: "No sale record found for this product", title: "Error");
         }
       }
     } catch (e) {
@@ -122,14 +121,17 @@ class ProductDetailControllerImpl extends ProductDetailController {
         var response = await productData.salesData(
           salesItemCarType: productModel!.carType!,
           salesItemName: productModel!.name!,
-          salesItemYear:
-              AppValidator.convertArabicNumbers(productModel!.year!.toString()),
+          salesItemYear: AppValidator.convertArabicNumbers(
+            productModel!.year!.toString(),
+          ),
           salesItemLocation: productModel!.location!,
           salesPrice: AppValidator.convertArabicNumbers(priceController.text),
-          salesProfit: (int.parse(
-                      AppValidator.convertArabicNumbers(priceController.text)) -
-                  productModel!.price!)
-              .toString(),
+          salesProfit:
+              (int.parse(
+                        AppValidator.convertArabicNumbers(priceController.text),
+                      ) -
+                      productModel!.price!)
+                  .toString(),
           salesCustomer: customerNameController.text,
           itemsId: productModel!.id.toString(),
           itemCount: (productModel!.itemCount!).toString(),
@@ -143,8 +145,10 @@ class ProductDetailControllerImpl extends ProductDetailController {
             salesItemYear: productModel!.year!,
             salesItemLocation: productModel!.location!,
             salesPrice: productModel!.price!,
-            salesProfit: int.parse(
-                    AppValidator.convertArabicNumbers(priceController.text)) -
+            salesProfit:
+                int.parse(
+                  AppValidator.convertArabicNumbers(priceController.text),
+                ) -
                 productModel!.price!,
             salesCustomer: customerNameController.text,
             itemsId: productModel!.id,
@@ -183,13 +187,14 @@ class ProductDetailControllerImpl extends ProductDetailController {
           List imageList = response['data'];
           print("Raw images data: $imageList");
 
-          imagesList = imageList.map<ImageModel>((e) {
-            return ImageModel(
-              imageId: e['image_id'],
-              itemsId: e['items_id'],
-              imageUrl: e['image_url'],
-            );
-          }).toList();
+          imagesList =
+              imageList.map<ImageModel>((e) {
+                return ImageModel(
+                  imageId: e['image_id'],
+                  itemsId: e['items_id'],
+                  imageUrl: e['image_url'],
+                );
+              }).toList();
           print("Mapped images list: $imagesList");
         } else {
           print("Error from API: ${response['message']}");
@@ -208,16 +213,20 @@ class ProductDetailControllerImpl extends ProductDetailController {
     update();
 
     try {
-      var response =
-          await productData.deleteData({'id': itemId, 'imagename': imageName});
+      var response = await productData.deleteData({
+        'id': itemId,
+        'imagename': imageName,
+      });
       print("Response body: $response");
 
       if (response['status'] == 'success') {
         int parsedItemId = int.parse(itemId);
         if (productModel != null && productModel!.id == parsedItemId) {
           if (imageName.isNotEmpty) {
-            imagesList.removeWhere((image) =>
-                image.itemsId == parsedItemId && image.imageUrl == imageName);
+            imagesList.removeWhere(
+              (image) =>
+                  image.itemsId == parsedItemId && image.imageUrl == imageName,
+            );
           } else {
             imagesList.removeWhere((image) => image.itemsId == parsedItemId);
           }
@@ -226,7 +235,9 @@ class ProductDetailControllerImpl extends ProductDetailController {
         statusRequest = StatusRequest.success;
       } else {
         AppLoaders.errorSnackBar(
-            title: "36".tr, message: response['message'] ?? "96".tr);
+          title: "36".tr,
+          message: response['message'] ?? "96".tr,
+        );
         statusRequest = StatusRequest.failure;
       }
     } catch (e) {
@@ -239,7 +250,9 @@ class ProductDetailControllerImpl extends ProductDetailController {
   }
 
   goToProductEditPage() {
-    Get.toNamed(AppRoute.editProductDetails,
-        arguments: {'product': ProductModel.fromJson(productModel!.toJson())});
+    Get.toNamed(
+      AppRoute.editProductDetails,
+      arguments: {'product': ProductModel.fromJson(productModel!.toJson())},
+    );
   }
 }

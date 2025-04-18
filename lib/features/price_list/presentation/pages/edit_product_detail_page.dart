@@ -14,221 +14,264 @@ class EditProductDetailPage extends StatelessWidget {
     EditProductControllerImp controller = Get.put(EditProductControllerImp());
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text("69".tr),
-      ),
-      body: SingleChildScrollView(
-        padding: EdgeInsets.symmetric(
-            horizontal: AppSizes.defaultSpace, vertical: 10),
-        child: Form(
-          key: controller.formKey,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              TextFormField(
-                  controller: controller.carTypeController,
-                  validator: (value) =>
-                      AppValidator.validateEmptyText("17".tr, value),
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Iconsax.car),
-                    labelText: "17".tr,
-                    labelStyle:
-                        TextStyle(color: AppColors.darkGrey, fontSize: 16),
-                    hintText: "28".tr,
-                    hintStyle: TextStyle(color: AppColors.darkGrey),
-                  )),
-              const SizedBox(
-                height: AppSizes.spaceBtwInputFields,
-              ),
-              Row(
+      appBar: AppBar(title: Text("69".tr)),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          bool isWide = constraints.maxWidth > 600;
+
+          return SingleChildScrollView(
+            padding: EdgeInsets.symmetric(
+              horizontal: isWide ? constraints.maxWidth * 0.1 : 24,
+            ),
+            child: Form(
+              key: controller.formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Expanded(
-                    child: TextFormField(
-                        keyboardType: TextInputType.number,
-                        controller: controller.carYearController,
-                        validator: (value) =>
-                            AppValidator.validateNumber("18".tr, value),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Iconsax.calendar_2),
-                          labelText: "18".tr,
-                          labelStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 16),
-                          hintText: "29".tr,
-                          hintStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 12),
-                        )),
-                  ),
-                  const SizedBox(
-                    width: AppSizes.spaceBtwItems,
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                        controller: controller.itemColorController,
-                        validator: (value) =>
-                            AppValidator.validateEmptyText("19".tr, value),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Iconsax.color_swatch),
-                          labelText: "19".tr,
-                          labelStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 16),
-                          hintText: "30".tr,
-                          hintStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 12),
-                        )),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: AppSizes.spaceBtwInputFields,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    flex: 2,
-                    child: TextFormField(
-                        controller: controller.itemNameController,
-                        validator: (value) =>
-                            AppValidator.validateEmptyText("20".tr, value),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Iconsax.path_square),
-                          labelText: "20".tr,
-                          labelStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 16),
-                          hintText: "31".tr,
-                          hintStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 12),
-                        )),
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                        controller: controller.itemCountController,
-                        keyboardType: TextInputType.number,
-                        validator: (value) =>
-                            AppValidator.validateEmptyText("99".tr, value),
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Icons.numbers),
-                          labelText: "99".tr,
-                          labelStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 12),
-                          hintText: "100".tr,
-                          hintStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 12),
-                        )),
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: AppSizes.spaceBtwInputFields,
-              ),
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                  prefixIcon: Icon(Iconsax.location),
-                  labelText: "21".tr,
-                  labelStyle:
-                      TextStyle(color: AppColors.darkGrey, fontSize: 16),
-                  hintStyle: TextStyle(color: AppColors.darkGrey, fontSize: 12),
-                ),
-                value: controller.selectedValue,
-                items: [
-                  DropdownMenuItem(
-                    value: "بورة شوكين",
-                    child: Text("بورة شوكين"),
-                  ),
-                  DropdownMenuItem(
-                    value: "محل دير الزهراني",
-                    child: Text("محل دير الزهراني"),
-                  ),
-                  DropdownMenuItem(
-                    value: "بورة دير الزهراني",
-                    child: Text("بورة دير الزهراني"),
-                  ),
-                  DropdownMenuItem(
-                    value: "محل خلدة",
-                    child: Text("محل خلدة"),
-                  )
-                ],
-                onChanged: (value) {
-                  controller.selectedValue = value!;
-                },
-              ),
-              const SizedBox(
-                height: AppSizes.spaceBtwInputFields,
-              ),
-              Row(
-                children: [
-                  Expanded(
-                    child: TextFormField(
-                        controller: controller.itemPriceController,
-                        validator: (value) =>
-                            AppValidator.validateNumber("22".tr, value),
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Iconsax.dollar_circle),
-                          labelText: "22".tr,
-                          labelStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 16),
-                          hintText: "22".tr,
-                          hintStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 12),
-                        )),
-                  ),
-                  const SizedBox(
-                    width: AppSizes.spaceBtwItems,
-                  ),
-                  Expanded(
-                    child: TextFormField(
-                        controller: controller.itemSellPriceController,
-                        validator: (value) =>
-                            AppValidator.validateNumber("23".tr, value),
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          prefixIcon: Icon(Iconsax.dollar_circle),
-                          labelText: "23".tr,
-                          labelStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 12),
-                          hintText: "23".tr,
-                          hintStyle: TextStyle(
-                              color: AppColors.darkGrey, fontSize: 12),
-                        )),
-                  ),
-                  const SizedBox(
-                    height: AppSizes.spaceBtwInputFields,
-                  ),
-                ],
-              ),
-              const SizedBox(
-                height: AppSizes.spaceBtwInputFields,
-              ),
-              TextFormField(
-                  controller: controller.noteController,
-                  maxLines: 3,
-                  validator: (value) =>
-                      AppValidator.validateEmptyText("24".tr, value),
-                  decoration: InputDecoration(
-                    prefixIcon: Icon(Iconsax.note),
-                    labelText: "24".tr,
-                    labelStyle:
-                        TextStyle(color: AppColors.darkGrey, fontSize: 16),
-                    hintText: "32".tr,
-                    hintStyle: TextStyle(
-                      color: AppColors.darkGrey,
-                      fontSize: 12,
+                  TextFormField(
+                    controller: controller.carTypeController,
+                    validator:
+                        (value) =>
+                            AppValidator.validateEmptyText("17".tr, value),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Iconsax.car),
+                      labelText: "17".tr,
+                      labelStyle: const TextStyle(
+                        color: AppColors.darkGrey,
+                        fontSize: 16,
+                      ),
+                      hintText: "28".tr,
+                      hintStyle: const TextStyle(color: AppColors.darkGrey),
                     ),
-                  )),
-              const SizedBox(
-                height: AppSizes.spaceBtwInputFields,
-              ),
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                    onPressed: () {
-                      controller.editProduct();
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwInputFields),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          keyboardType: TextInputType.number,
+                          controller: controller.carYearController,
+                          validator:
+                              (value) =>
+                                  AppValidator.validateNumber("18".tr, value),
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Iconsax.calendar_2),
+                            labelText: "18".tr,
+                            labelStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 16,
+                            ),
+                            hintText: "29".tr,
+                            hintStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: AppSizes.spaceBtwItems),
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.itemColorController,
+                          validator:
+                              (value) => AppValidator.validateEmptyText(
+                                "19".tr,
+                                value,
+                              ),
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Iconsax.color_swatch),
+                            labelText: "19".tr,
+                            labelStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 16,
+                            ),
+                            hintText: "30".tr,
+                            hintStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwInputFields),
+                  Row(
+                    children: [
+                      Expanded(
+                        flex: 2,
+                        child: TextFormField(
+                          controller: controller.itemNameController,
+                          validator:
+                              (value) => AppValidator.validateEmptyText(
+                                "20".tr,
+                                value,
+                              ),
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Iconsax.path_square),
+                            labelText: "20".tr,
+                            labelStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 16,
+                            ),
+                            hintText: "31".tr,
+                            hintStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.itemCountController,
+                          keyboardType: TextInputType.number,
+                          validator:
+                              (value) => AppValidator.validateEmptyText(
+                                "99".tr,
+                                value,
+                              ),
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Icons.numbers),
+                            labelText: "99".tr,
+                            labelStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 12,
+                            ),
+                            hintText: "100".tr,
+                            hintStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwInputFields),
+                  DropdownButtonFormField<String>(
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Iconsax.location),
+                      labelText: "21".tr,
+                      labelStyle: const TextStyle(
+                        color: AppColors.darkGrey,
+                        fontSize: 16,
+                      ),
+                      hintStyle: const TextStyle(
+                        color: AppColors.darkGrey,
+                        fontSize: 12,
+                      ),
+                    ),
+                    value: controller.selectedValue,
+                    items: [
+                      const DropdownMenuItem(
+                        value: "بورة شوكين",
+                        child: Text("بورة شوكين"),
+                      ),
+                      const DropdownMenuItem(
+                        value: "محل دير الزهراني",
+                        child: Text("محل دير الزهراني"),
+                      ),
+                      const DropdownMenuItem(
+                        value: "بورة دير الزهراني",
+                        child: Text("بورة دير الزهراني"),
+                      ),
+                      const DropdownMenuItem(
+                        value: "محل خلدة",
+                        child: Text("محل خلدة"),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      controller.selectedValue = value!;
                     },
-                    child: Text("69".tr)),
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwInputFields),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.itemPriceController,
+                          validator:
+                              (value) =>
+                                  AppValidator.validateNumber("22".tr, value),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Iconsax.dollar_circle),
+                            labelText: "22".tr,
+                            labelStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 16,
+                            ),
+                            hintText: "22".tr,
+                            hintStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(width: AppSizes.spaceBtwItems),
+                      Expanded(
+                        child: TextFormField(
+                          controller: controller.itemSellPriceController,
+                          validator:
+                              (value) =>
+                                  AppValidator.validateNumber("23".tr, value),
+                          keyboardType: TextInputType.number,
+                          decoration: InputDecoration(
+                            prefixIcon: const Icon(Iconsax.dollar_circle),
+                            labelText: "23".tr,
+                            labelStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 12,
+                            ),
+                            hintText: "23".tr,
+                            hintStyle: const TextStyle(
+                              color: AppColors.darkGrey,
+                              fontSize: 12,
+                            ),
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: AppSizes.spaceBtwInputFields),
+                    ],
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwInputFields),
+                  TextFormField(
+                    controller: controller.noteController,
+                    maxLines: 3,
+                    validator:
+                        (value) =>
+                            AppValidator.validateEmptyText("24".tr, value),
+                    decoration: InputDecoration(
+                      prefixIcon: const Icon(Iconsax.note),
+                      labelText: "24".tr,
+                      labelStyle: const TextStyle(
+                        color: AppColors.darkGrey,
+                        fontSize: 16,
+                      ),
+                      hintText: "32".tr,
+                      hintStyle: const TextStyle(
+                        color: AppColors.darkGrey,
+                        fontSize: 12,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: AppSizes.spaceBtwInputFields),
+                  SizedBox(
+                    width: double.infinity,
+                    child: ElevatedButton(
+                      onPressed: () {
+                        controller.editProduct();
+                      },
+                      child: Text("69".tr),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            ),
+          );
+        },
       ),
     );
   }

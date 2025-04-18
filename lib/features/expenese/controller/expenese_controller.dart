@@ -8,10 +8,11 @@ import 'package:al_amine_store/utlis/validators/validation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class ExpeneseControllerImpl extends GetxController {
+class ExpeneseControllerImpl extends GetxController
+    with WidgetsBindingObserver {
   ExpensesModel? expensesModel;
   StatusRequest statusRequest = StatusRequest.none;
-
+ 
   List<ExpensesModel> expensesList = [];
   List<ExpensesModel> filteredExpenses = [];
   ExpensesDataSource expensesDataSource = ExpensesDataSource(Get.find());
@@ -25,15 +26,31 @@ class ExpeneseControllerImpl extends GetxController {
   late TextEditingController priceController;
 
   var selectedValue = "محل خلدة";
+  @override
+  void onClose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.onClose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      print("App resumed, refreshing UI");
+      update();
+    }
+  }
 
   @override
   void onInit() {
+    super.onInit();
+
     viewExpenese();
+    WidgetsBinding.instance.addObserver(this);
+
     nameController = TextEditingController();
     noteController = TextEditingController();
     dateController = TextEditingController();
     priceController = TextEditingController();
-    super.onInit();
   }
 
   addExpeneses() async {
@@ -109,7 +126,7 @@ class ExpeneseControllerImpl extends GetxController {
           expensesList =
               datalist.map((e) => ExpensesModel.fromJson(e)).toList();
 
-          //applyFilter(); // Apply filter after fetching data
+          applyFilter(); // Apply filter after fetching data
         } else {
           statusRequest = StatusRequest.failure;
           AppLoaders.errorSnackBar(message: "89".tr, title: "36".tr);

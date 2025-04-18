@@ -10,7 +10,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 
-abstract class EditProductController extends GetxController {}
+abstract class EditProductController extends GetxController  {}
 
 class EditProductControllerImp extends EditProductController {
   ProductModel? productModel; // Allow it to be null initially

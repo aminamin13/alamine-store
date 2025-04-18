@@ -124,12 +124,14 @@ class ButtonContainer extends StatelessWidget {
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          spacing: 10,
-          children: [
+           children: [
             Icon(
               icon,
               size: 45,
               color: AppColors.grey,
+            ),
+            const SizedBox(
+              height: 10,
             ),
             Text(
               title,

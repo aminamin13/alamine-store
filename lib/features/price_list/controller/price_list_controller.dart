@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 
-abstract class PriceListController extends GetxController {
+abstract class PriceListController extends GetxController  {
   getData();
 }
 

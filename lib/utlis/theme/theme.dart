@@ -8,13 +8,14 @@ import 'package:al_amine_store/utlis/theme/custom_themes/outlined_button_theme.d
 import 'package:al_amine_store/utlis/theme/custom_themes/text_field_theme.dart';
 import 'package:al_amine_store/utlis/theme/custom_themes/text_theme.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class AppTheme {
   AppTheme._();
 
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: "Poppins",
+    fontFamily: GoogleFonts.poppins().fontFamily,
     brightness: Brightness.light,
     primaryColor: Colors.blue,
     scaffoldBackgroundColor: Colors.white,
@@ -30,7 +31,7 @@ class AppTheme {
 
   static ThemeData arabicTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: "Cairo",
+    fontFamily: GoogleFonts.cairo().fontFamily,
     brightness: Brightness.light,
     primaryColor: Colors.blue,
     scaffoldBackgroundColor: Colors.white,
@@ -46,7 +47,7 @@ class AppTheme {
 
   static ThemeData englishTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: "Poppins",
+    fontFamily: GoogleFonts.poppins().fontFamily,
     brightness: Brightness.light,
     primaryColor: Colors.blue,
     scaffoldBackgroundColor: Colors.white,
@@ -62,7 +63,7 @@ class AppTheme {
 
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
-    fontFamily: "Poppins",
+    fontFamily: GoogleFonts.poppins().fontFamily,
     brightness: Brightness.dark,
     primaryColor: Colors.blue,
     scaffoldBackgroundColor: AppColors.dark,

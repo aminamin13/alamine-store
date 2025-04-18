@@ -1,0 +1,2 @@
+C:/Users/aminh/FlutterProjects/al_amine_store/android/app/.cxx/RelWithDebInfo/5v6j5u66/arm64-v8a/CMakeFiles/edit_cache.dir
+C:/Users/aminh/FlutterProjects/al_amine_store/android/app/.cxx/RelWithDebInfo/5v6j5u66/arm64-v8a/CMakeFiles/rebuild_cache.dir

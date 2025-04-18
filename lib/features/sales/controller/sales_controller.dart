@@ -34,9 +34,10 @@ class SalesControllerImpl extends SalesController {
           List datalist = response['data'];
           print(datalist);
           allSales = datalist.map((e) => SalesModel.fromJson(e)).toList();
-          //applyFilter(); // Apply filter after fetching data
+           applyFilter(); // Apply filter after fetching data
         } else {
-          null;
+          statusRequest = StatusRequest.failure;
+          AppLoaders.errorSnackBar(message: "89".tr, title: "36".tr);
         }
       }
     } catch (e) {

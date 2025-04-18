@@ -1,3 +1,4 @@
+import 'package:al_amine_store/common/class/status_request.dart';
 import 'package:al_amine_store/features/home/presentation/widgets/app_primary_header_container.dart';
 import 'package:al_amine_store/features/tables/controller/expenese_controller.dart';
 import 'package:al_amine_store/utlis/const/colors.dart';
@@ -6,6 +7,7 @@ import 'package:al_amine_store/utlis/const/sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
+import 'package:syncfusion_flutter_datagrid/datagrid.dart';
 
 class ExpensesTable extends StatefulWidget {
   const ExpensesTable({super.key});
@@ -14,15 +16,34 @@ class ExpensesTable extends StatefulWidget {
   State<ExpensesTable> createState() => _ExpensesTableState();
 }
 
-class _ExpensesTableState extends State<ExpensesTable> {
-  ExpeneseTableControllerImpl controller =
-      Get.put(ExpeneseTableControllerImpl());
+class _ExpensesTableState extends State<ExpensesTable>
+    with WidgetsBindingObserver {
+  late ExpeneseTableControllerImpl controller;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = Get.put(ExpeneseTableControllerImpl());
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    Get.delete<ExpeneseTableControllerImpl>();
+    super.dispose();
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    if (state == AppLifecycleState.resumed) {
+      controller.viewData(); // Refresh data when app is resumed
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    Future.delayed(Duration.zero, () {
-      Get.delete<ExpeneseTableControllerImpl>();
-    });
+    double screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
       body: Column(
@@ -45,8 +66,10 @@ class _ExpensesTableState extends State<ExpensesTable> {
                   ),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(
-                      horizontal: AppSizes.defaultSpace, vertical: 10),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: screenWidth > 600 ? 50.0 : 20.0,
+                    vertical: 10,
+                  ),
                   child: Row(
                     children: [
                       Expanded(
@@ -57,9 +80,13 @@ class _ExpensesTableState extends State<ExpensesTable> {
                                 prefixIcon: Icon(Iconsax.location),
                                 filled: true,
                                 labelStyle: TextStyle(
-                                    color: AppColors.darkGrey, fontSize: 16),
+                                  color: AppColors.darkGrey,
+                                  fontSize: 16,
+                                ),
                                 hintStyle: TextStyle(
-                                    color: AppColors.darkGrey, fontSize: 12),
+                                  color: AppColors.darkGrey,
+                                  fontSize: 12,
+                                ),
                               ),
                               value: controller.selectedValue,
                               items: [
@@ -82,7 +109,7 @@ class _ExpensesTableState extends State<ExpensesTable> {
                                 const DropdownMenuItem(
                                   value: "محل خلدة",
                                   child: Text("محل خلدة"),
-                                )
+                                ),
                               ],
                               onChanged: (value) {
                                 controller.selectedValue = value!;
@@ -92,6 +119,7 @@ class _ExpensesTableState extends State<ExpensesTable> {
                           },
                         ),
                       ),
+                      const SizedBox(width: 10),
                       IconButton(
                         icon: const Icon(
                           Iconsax.calendar_add,
@@ -124,35 +152,51 @@ class _ExpensesTableState extends State<ExpensesTable> {
                     ],
                   ),
                 ),
-                const SizedBox(
-                  height: AppSizes.spaceBtwSections,
-                ),
+                const SizedBox(height: AppSizes.spaceBtwSections),
               ],
             ),
           ),
-          // Wrap the GetBuilder in Expanded
           Expanded(
-            child: GetBuilder<ExpeneseTableControllerImpl>(
-              builder: (controller) {
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: controller.filteredSales.length,
-                  itemBuilder: (context, index) {
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: AppSizes.defaultSpace, vertical: 10),
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(10),
+            child: Center(
+              child: Container(
+                alignment: Alignment.center,
+                width: screenWidth > 600 ? double.infinity : 400,
+                padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                child: GetBuilder<ExpeneseTableControllerImpl>(
+                  builder: (controller) {
+                    if (controller.statusRequest == StatusRequest.loading) {
+                      return const Center(child: CircularProgressIndicator());
+                    }
+
+                    return SingleChildScrollView(
+                      scrollDirection: Axis.horizontal,
+                      child: SizedBox(
+                        width: screenWidth > 600 ? 600 : 300,
+                        child: SfDataGrid(
+                          columnWidthMode: ColumnWidthMode.fill,
+                          selectionMode: SelectionMode.multiple,
+                          footer: Container(
+                            padding: const EdgeInsets.symmetric(
+                              horizontal: 16.0,
+                            ),
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              'Total Expeneses: ${controller.total} \$',
+                              style: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                          source: controller.getExpenseDataSource(),
+                          columns: controller.getColumns(
+                            screenWidth > 600 ? 200 : 100,
+                          ),
                         ),
-                        child: Text(
-                            controller.filteredSales[index].salesItemName!),
                       ),
                     );
                   },
-                );
-              },
+                ),
+              ),
             ),
           ),
         ],

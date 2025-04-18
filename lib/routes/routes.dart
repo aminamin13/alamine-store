@@ -7,8 +7,7 @@ import 'package:al_amine_store/features/price_list/presentation/pages/edit_produ
 import 'package:al_amine_store/features/price_list/presentation/pages/price_list_page.dart';
 import 'package:al_amine_store/features/price_list/presentation/pages/product_detail_page.dart';
 import 'package:al_amine_store/features/products/presentation/pages/add_a_product_page.dart';
-import 'package:al_amine_store/features/reports/presentation/reports_page.dart';
-import 'package:al_amine_store/features/sales/presentation/sales_page.dart';
+ import 'package:al_amine_store/features/sales/presentation/sales_page.dart';
 import 'package:al_amine_store/features/splash/presentation/splash_page.dart';
 import 'package:al_amine_store/features/tables/presentation/expenses_table.dart';
 import 'package:al_amine_store/features/tables/presentation/sales_table.dart';
@@ -51,8 +50,7 @@ List<GetPage<dynamic>>? routes = [
   GetPage(name: AppRoute.sales, page: () => const SalesPage()),
   GetPage(name: AppRoute.expenese, page: () => const ExpensesPage()),
   GetPage(name: AppRoute.addExpenese, page: () => const ExpeneseAddPage()),
-  GetPage(name: AppRoute.reports, page: () => const ReportsPage()),
-  GetPage(name: AppRoute.salesTablePage, page: () => const SalesTable()),
+   GetPage(name: AppRoute.salesTablePage, page: () => const SalesTable()),
   GetPage(name: AppRoute.tablesPage, page: () => const TablesPage()),
   GetPage(name: AppRoute.expeneseTablePage, page: () => const ExpensesTable()),
 ];
